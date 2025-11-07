@@ -1946,7 +1946,9 @@ equal :: proc(a, b: any, including_indirect_array_recursion := false, recursion_
 		if v.equal != nil {
 			return v.equal(a.data, b.data)
 		}
-		return false
+		x := get_union_variant(a)
+		y := get_union_variant(b)
+		return equal(x, y, including_indirect_array_recursion, recursion_level)
 	case Type_Info_Slice:
 		if !including_indirect_array_recursion {
 			return false
